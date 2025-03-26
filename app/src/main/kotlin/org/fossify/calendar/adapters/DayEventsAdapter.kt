@@ -41,6 +41,9 @@ class DayEventsAdapter(activity: SimpleActivity, val events: ArrayList<Event>, r
 
     override fun actionItemPressed(id: Int) {
         when (id) {
+            R.id.cab_x -> changeEventsCategoryTo("X")
+            R.id.cab_y -> changeEventsCategoryTo("Y")
+            R.id.cab_z -> changeEventsCategoryTo("Z")
             R.id.cab_share -> shareEvents()
             R.id.cab_delete -> askConfirmDelete()
         }
@@ -141,6 +144,10 @@ class DayEventsAdapter(activity: SimpleActivity, val events: ArrayList<Event>, r
     }
 
     private fun shareEvents() = activity.shareEvents(selectedKeys.distinct().map { it.toLong() })
+
+    private fun changeEventsCategoryTo(newCategory: String) {
+        println("Changing category to $newCategory")
+    }
 
     private fun askConfirmDelete() {
         val eventIds = selectedKeys.map { it.toLong() }.toMutableList()
