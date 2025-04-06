@@ -154,10 +154,13 @@ class DayEventsAdapter(activity: SimpleActivity, val events: ArrayList<Event>, r
             eventsToEdit.forEach {
                 it.eventType = newEventType.id!!
                 it.color = newEventType.color
-                activity.eventsHelper.editSelectedOccurrence(it, showToasts = true, enableEventType = false){}
+                activity.eventsHelper.editSelectedOccurrence(it, showToasts = true, enableEventType = true){}
             }
             activity.runOnUiThread {
                 removeSelectedItems(positions)
+                positions.forEach { position ->
+                    notifyItemChanged(position)
+                }
             }
         }
     }
