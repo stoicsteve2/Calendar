@@ -194,7 +194,7 @@ class EventsHelper(val context: Context) {
         }
     }
 
-    fun editSelectedOccurrence(event: Event, showToasts: Boolean, callback: () -> Unit) {
+    fun editSelectedOccurrence(event: Event, showToasts: Boolean, enableEventType: Boolean = true, callback: () -> Unit) {
         ensureBackgroundThread {
             event.apply {
                 parentId = id!!.toLong()
@@ -206,7 +206,7 @@ class EventsHelper(val context: Context) {
             if (event.isTask()) {
                 insertTask(event, showToasts = showToasts, callback = callback)
             } else {
-                insertEvent(event, addToCalDAV = true, showToasts = showToasts) {
+                insertEvent(event, addToCalDAV = true, showToasts = showToasts, enableEventType = enableEventType) {
                     callback()
                 }
             }
@@ -655,4 +655,10 @@ class EventsHelper(val context: Context) {
 
         return eventTypeColors
     }
+
+    fun getEventTypeByTitle(title: String): EventType? {
+        val eventTypeId = context.eventTypesDB.getEventTypeIdWithTitle(title)
+        return eventTypeId?.let { context.eventTypesDB.getEventTypeWithId(it) }
+    }
+
 }

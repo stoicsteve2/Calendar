@@ -145,8 +145,21 @@ class DayEventsAdapter(activity: SimpleActivity, val events: ArrayList<Event>, r
 
     private fun shareEvents() = activity.shareEvents(selectedKeys.distinct().map { it.toLong() })
 
-    private fun changeEventsCategoryTo(newCategory: String) {
-        println("Changing category to $newCategory")
+    private fun changeEventsCategoryTo(newEventTypeTitle: String) {
+        val eventsToEdit = events.filter { selectedKeys.contains(it.id?.toInt()) }
+        val positions = getSelectedItemPositions()
+
+        ensureBackgroundThread {
+            val newEventType = activity.eventsHelper.getEventTypeByTitle(newEventTypeTitle) ?: return@ensureBackgroundThread
+            eventsToEdit.forEach {
+                it.eventType = newEventType.id!!
+                it.color = newEventType.color
+                activity.eventsHelper.editSelectedOccurrence(it, showToasts = true, enableEventType = false){}
+            }
+            activity.runOnUiThread {
+                removeSelectedItems(positions)
+            }
+        }
     }
 
     private fun askConfirmDelete() {
