@@ -42,7 +42,6 @@ class DayEventsAdapter(activity: SimpleActivity, val events: ArrayList<Event>, r
     override fun actionItemPressed(id: Int) {
         when (id) {
             R.id.cab_x -> changeEventsCategoryTo("X")
-            R.id.cab_y -> changeEventsCategoryTo("Y")
             R.id.cab_z -> changeEventsCategoryTo("Z")
             R.id.cab_share -> shareEvents()
             R.id.cab_delete -> askConfirmDelete()

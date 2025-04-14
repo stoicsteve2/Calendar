@@ -6,10 +6,6 @@
         android:title="@string/x_item"
         app:showAsAction="always" />
     <item
-        android:id="@+id/cab_y"
-        android:title="@string/y_item"
-        app:showAsAction="always" />
-    <item
         android:id="@+id/cab_z"
         android:title="@string/z_item"
         app:showAsAction="always" />
